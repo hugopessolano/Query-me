@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Administrar Queries</title>
+
+  <!-- CodeMirror CSS -->
+  <link rel="stylesheet" href="vendor/codemirror/codemirror.css">
+  <link rel="stylesheet" href="vendor/codemirror/theme/monokai.css">
+
+  <!-- Estilos generales que ya tengas -->
+  <link rel="stylesheet" href="styles.css"> 
+
+  <!-- Nuevo CSS específico para esta vista -->
+  <link rel="stylesheet" href="manager_styles.css">
+
+  <!-- CodeMirror JS -->
+  <script src="vendor/codemirror/codemirror.js"></script>
+  <script src="vendor/codemirror/mode/sql/sql.js"></script>
+</head>
+<body>
+  <!-- Encabezado -->
+  <div class="header">
+    <h1>Administrar Queries</h1>
+    <!-- Botón de "Añadir Query" que llama a la función openAddQueryPopup() -->
+    <button id="btnAddQuery">+ Añadir Query</button>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="container">
+    <!-- Listado (card-based) donde se inyectarán las queries con JS -->
+    <div id="queriesList" class="queries-list"></div>
+  </div>
+
+  <!-- Contenedor para notificaciones tipo Toast -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <!-- popup_manager.js NO se modificó, pero debe cargarse antes para exponer las funciones -->
+  <script src="popup_manager.js"></script>
+  <script src="query_admin.js"></script>
+</body>
+</html>

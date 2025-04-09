@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Añadir Query Personalizada</title>
+  <!-- ============================= -->
+  <!-- CodeMirror CSS y tema Monokai -->
+  <link rel="stylesheet" href="vendor/codemirror/codemirror.css">
+  <link rel="stylesheet" href="vendor/codemirror/theme/monokai.css">
+  <!-- ============================= -->
+  
+  <style>
+    /* Estilos Generales - Tema Oscuro */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #1f1f1f;
+      color: #f0f0f0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+    h2 {
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+    label {
+      font-weight: 600;
+      margin: 8px 0 4px 0;
+      display: inline-block;
+      color: #ccc;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      background-color: #2f2f2f;
+      color: #f0f0f0;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      box-shadow: 0 0 3px rgba(100, 100, 100, 0.7);
+    }
+
+    #descripcion {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    /* El textarea original para CodeMirror (podrías ocultarlo con display:none) */
+    #query {
+      display: none; /* CodeMirror lo reemplaza */
+    }
+
+    .field-group {
+      margin-bottom: 12px;
+    }
+    .btn-container {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #fff;
+      background-color: #3a3a3a;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #575757;
+    }
+
+    /* Contenedor de tags */
+    #paramTagsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      background-color: #3a3a3a;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      position: relative;
+    }
+    .tag .close-btn {
+      margin-left: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #ccc;
+    }
+    .tag .close-btn:hover {
+      color: #fff;
+    }
+
+    /* Contenedor de autocomplete */
+    #autocompleteContainer {
+      position: absolute;
+      display: none;
+      z-index: 999;
+      background-color: #2f2f2f;
+      border: 1px solid #444;
+      border-radius: 4px;
+      max-height: 150px;
+      overflow-y: auto;
+      width: 100%;
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #444;
+      opacity: 0.7;
+    }
+    .autocomplete-item:hover {
+      background-color: #575757;
+      opacity: 1;
+    }
+    .autocomplete-item.active {
+      background-color: #575757;
+      opacity: 1;
+    }
+    .autocomplete-match {
+      color: #66ff66;
+      font-weight: bold;
+    }
+
+    /* CodeMirror overrides */
+    .CodeMirror {
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 14px;
+      height: auto;
+      min-height: 120px;
+    }
+    .cm-s-monokai {
+      background-color: #272822; /* matched with monokai theme */
+      color: #f8f8f2;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Scripts de CodeMirror -->
+  <script src="vendor/codemirror/codemirror.js"></script>
+  <script src="vendor/codemirror/mode/sql/sql.js"></script>
+
+  <!-- Fin CodeMirror -->
+
+  <div class="container">
+    <h2>Añadir Query Personalizada</h2>
+
+    <div class="field-group">
+      <label for="nombre">Nombre (máx. 50)</label><br>
+      <input 
+        type="text" 
+        id="nombre" 
+        maxlength="50" 
+        placeholder="Ej: Mi query especial" 
+      />
+    </div>
+
+    <div class="field-group">
+      <label for="descripcion">Descripción (máx. 500)</label><br>
+      <textarea 
+        id="descripcion" 
+        maxlength="500" 
+        placeholder="Pequeña descripción sobre esta query...">
+      </textarea>
+    </div>
+
+    <div class="field-group">
+      <label for="urlCampo">URL (máx. 200)</label><br>
+      <input 
+        type="text" 
+        id="urlCampo" 
+        maxlength="200"
+        placeholder="Ej: https://stats.tiendanube.com/store/profile?store_id=..."
+      />
+    </div>
+
+    <div class="field-group">
+      <label for="parametros">Parámetros</label><br>
+      <input 
+        type="text" 
+        id="parametros" 
+        placeholder="Escribe algo y presiona SPACE para generar un tag"
+      />
+      <div id="paramTagsContainer"></div>
+    </div>
+
+    <!-- NUEVO: Campo para elegir o ingresar la Categoría -->
+    <div class="field-group">
+      <label for="categoriaCampo">Categoría</label><br>
+      <input 
+        type="text" 
+        id="categoriaCampo" 
+        maxlength="100"
+        placeholder="Ej: 'Personalizadas', 'Billing (BE)', etc."
+      />
+    </div>
+
+    <div class="field-group">
+      <label for="query">Query (con CodeMirror)</label><br>
+      <textarea id="query" placeholder="SELECT * FROM ..."></textarea>
+      <!-- CodeMirror reemplazará este textarea -->
+    </div>
+
+    <div id="autocompleteContainer"></div>
+
+    <div class="btn-container">
+      <button id="btnAceptar">Aceptar</button>
+      <button id="btnCancelar">Cancelar</button>
+    </div>
+  </div>
+
+  <script src="popup_add_query.js"></script>
+</body>
+</html>

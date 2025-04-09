@@ -1,0 +1,28 @@
+{
+    "name": "Query Me!",
+    "version": "1.2",
+    "manifest_version": 3,
+    "description": "Extensión para copiar queries según el Store ID.",
+    "permissions": ["contextMenus", "scripting", "activeTab", "clipboardWrite", "storage", "windows"],
+    "web_accessible_resources": [{
+    "resources": [
+      "vendor/codemirror/*" 
+    ],
+    "matches": ["<all_urls>"]
+  }],
+    "host_permissions": ["https://stats.tiendanube.com/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://stats.tiendanube.com/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+      "default_title": "Query Me!",
+      "default_popup": "popup_add_query.html"
+    }
+  }
+  

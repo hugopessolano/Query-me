@@ -1,0 +1,148 @@
+/* ======= ESTILOS GENERALES ======= */
+body {
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+/* ======= TABLA GENERAL ======= */
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Encabezados */
+th {
+    background: #333;
+    font-weight: bold;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+/* ======= FILAS Y CELDAS ======= */
+tbody tr {
+    height: auto; /* Se adapta al contenido más alto */
+    display: table-row; /* ✅ Volvemos a usar el comportamiento de tabla */
+}
+
+/* Asegurar que las celdas respeten su espacio */
+td {
+    padding: 12px;
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Evita que el texto se rompa en múltiples líneas */
+}
+
+/* ======= COLUMNA DE PARÁMETROS ======= */
+.param-tags-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.param-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-height: 80px; /* Se fija la altura */
+    overflow-y: auto; /* Scroll interno */
+    padding: 5px;
+    width: 100%;
+}
+
+.param-tags::-webkit-scrollbar {
+    width: 4px;
+}
+
+.param-tags::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 10px;
+}
+
+.tag {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tag:hover {
+    background-color: #555;
+}
+
+/* ======= COLUMNA DE QUERY (CodeMirror) ======= */
+.query-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 280px;
+    height: 100px; /* Fijo */
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.CodeMirror {
+    height: 100%;
+    font-size: 12px;
+    overflow-y: auto;
+}
+
+/* ======= COLUMNA DE ACCIONES ======= */
+.actions {
+    min-width: 140px; /* ✅ Fijar tamaño mínimo para que NO SE COLAPSE */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 10px;
+}
+
+/* Botón de editar */
+.btn.edit {
+    background-color: #f0ad4e;
+}
+
+.btn.edit:hover {
+    background-color: #e09b3d;
+}
+
+/* Botón de eliminar */
+.btn.delete {
+    background-color: #d9534f;
+}
+
+.btn.delete:hover {
+    background-color: #c9302c;
+}
+
+/* Iconos dentro de los botones */
+.btn img {
+    width: 18px;
+    height: 18px;
+    transition: filter 0.2s ease-in-out;
+}
+
+.btn.edit:hover img, .btn.delete:hover img {
+    filter: brightness(1.2);
+}

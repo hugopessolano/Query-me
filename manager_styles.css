@@ -1,0 +1,181 @@
+/* ===== Reset / Estilos base ===== */
+* {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background-color: #1f1f1f;
+    color: #f0f0f0;
+  }
+  
+  /* ===== Header ===== */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2a2a2a;
+    padding: 10px 20px;
+  }
+  .header h1 {
+    margin: 0;
+    font-size: 18px;
+  }
+  .header #btnAddQuery {
+    background-color: #357edd; /* Color principal */
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .header #btnAddQuery:hover {
+    background-color: #2d6bc0;
+  }
+  
+  /* ===== Contenedor Principal ===== */
+  .container {
+    padding: 20px;
+  }
+  
+  /* ===== Listado de "tarjetas" ===== */
+  .queries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  /* ===== Tarjeta individual ===== */
+  .query-card {
+    background-color: #2f2f2f;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .query-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  
+  /* ----- Encabezado de la tarjeta ----- */
+  .query-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background-color: #3a3a3a;
+    cursor: pointer;
+    position: relative;
+  }
+  .query-card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+  }
+  .query-card-toggle {
+    font-size: 16px;
+    color: #aaa;
+    transition: transform 0.3s;
+  }
+  .query-card-toggle.expanded {
+    transform: rotate(180deg);
+  }
+  
+  /* ----- Detalles (colapsables) ----- */
+  .query-card-details {
+    display: none; /* Por defecto oculto; se despliega al hacer click en el header */
+    padding: 10px;
+  }
+  .query-details-row {
+    margin-bottom: 8px;
+  }
+  .detail-label {
+    font-weight: 600;
+    color: #ccc;
+    margin-right: 4px;
+  }
+  
+  /* Parámetros como "tags" */
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    background-color: #3a3a3a;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tag:hover {
+    background-color: #555;
+  }
+  
+  /* ----- CodeMirror container ----- */
+  .query-code-container {
+    margin-top: 8px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  /* ----- Botones de acción ----- */
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .action-button {
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: none;
+  }
+  .action-button.edit {
+    background-color: #f0ad4e;
+    color: #fff;
+  }
+  .action-button.edit:hover {
+    background-color: #e09b3d;
+  }
+  .action-button.delete {
+    background-color: #d9534f;
+    color: #fff;
+  }
+  .action-button.delete:hover {
+    background-color: #c9302c;
+  }
+  
+  /* ===== Toast ===== */
+  .toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+  }
+  .toast {
+    background-color: rgba(0,0,0,0.85);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-top: 5px;
+    opacity: 0;
+    animation: fadeInOut 3s forwards;
+  }
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
